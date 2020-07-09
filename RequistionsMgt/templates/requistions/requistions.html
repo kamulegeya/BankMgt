@@ -1,0 +1,22 @@
+{% extends 'requistions/base.html'%}
+{% block content %}
+<a href="{% url 'requistions:new_requistion'  %}"> Add new Requistion </a>
+<p>Your requistions submitted</p>
+<table class="table table-bordered " id="submitted-table">
+  <thead>
+   <tr>			
+   <th>Submitted by </th>	  
+   <th>Date Submitted </th>			
+   <th>Purpose </th>	
+   <th>Total </th>
+   <th> Add Details </th>
+   <th> View Details </th>	
+   <th> Delete line </th>	 		
+   </tr>
+
+</thead>
+<tbody>
+{% include 'requistions/requistions_partial_list.html' %}
+</tbody>
+
+{% endblock content %}

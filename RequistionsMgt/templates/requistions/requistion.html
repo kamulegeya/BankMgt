@@ -1,0 +1,30 @@
+{% extends 'requistions/base.html'%}
+{% block content %}
+
+<p>Requistion purpose: {{requistion}}</p>
+<p> Requistion Details
+</p>
+<table class="table table-bordered " id="details-table">
+    <thead>
+     <tr>			
+     <th>Employee Name</th>	  
+     <th>Requistion Type</th>			
+     <th>Period </th>	
+     <th>Number of days </th>	
+     <th>Start Date</th>
+     <th>End date</th>
+     <th>Allowance Rate </th>
+     <th>Amount </th>     
+     <th> Edit Line </th>	
+     <th> Delete line </th>			
+     </tr>
+ 
+ </thead>
+<tbody>
+{% include 'requistions/details_partial_list.html' %}
+</tbody>
+
+</table>
+
+
+{% endblock content %}

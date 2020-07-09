@@ -1,0 +1,11 @@
+{% extends 'requistions/base.html'%}
+{% block content %}
+<p> Add New Requistion</p>
+<form action="{% url 'requistions:new_requistion'  %}" method="POST">
+    {% csrf_token %}
+    {{ form.as_p}}
+    <button name="submit"> Add Requistion</button>
+
+</form>
+
+{% endblock content %}

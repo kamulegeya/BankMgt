@@ -1,0 +1,33 @@
+{% for t in details %}
+  <tr>
+    <td>{{ t.emp_name }}</td>  
+    <td>{{ t.detail_type }}</td>
+    <td>{{ t.period_claimed }}</td>
+    <td>{{ t.ndays }}</td>
+    <td>{{ t.startdate }}</td>
+    <td>{{ t.enddate }}</td>  
+    <td>{{ t.rate }}</td>    > 
+    <td>{{ t.amount }}</td>
+	<td style="width: 150px">
+      <button type="button"
+              class="btn btn-warning btn-sm js-update-tenancy"
+              data-url="#">
+        <span class="glyphicon glyphicon-pencil"></span> Edit
+      </button>
+	  </td>
+	  
+	  <td>
+      <button type="button"
+              class="btn btn-danger btn-sm js-delete-tenancy"
+              data-url="#">
+        <span class="glyphicon glyphicon-trash"></span> Delete
+      </button>
+    </td>
+     
+  </tr>
+{% empty %}
+
+  <tr>
+    <td colspan="8" class="text-center bg-warning">No Tenant</td>
+  </tr>
+{% endfor %}

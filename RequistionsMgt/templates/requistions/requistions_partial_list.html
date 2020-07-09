@@ -1,0 +1,29 @@
+{% for t in requistions %}
+  <tr>
+    <td>{{ t.made_by }}</td>  
+    <td>{{ t.date_made }}</td>
+    <td>{{ t.purpose }}</td> 
+    <td>{{ t.total }}</td>
+    <td >
+      <a href="{% url 'requistions:add_details' t.pk %}"> Add details</a>
+      </td>
+
+	<td >
+    <a href="{% url 'requistions:requistion_get' t.pk %}"> View details</a>
+	  </td>
+	  
+	  <td>
+      <button type="button"
+              class="btn btn-danger btn-sm js-delete-tenancy"
+              data-url="#">
+        <span class="glyphicon glyphicon-trash"></span> Delete
+      </button>
+    </td>
+     
+  </tr>
+{% empty %}
+
+  <tr>
+    <td colspan="8" class="text-center bg-warning">No Requistions to display</td>
+  </tr>
+{% endfor %}
