@@ -1,4 +1,6 @@
 from django.db import models
+from django.db.models.signals import post_save, post_delete
+from django.dispatch import receiver
 
 # Create your models here.
 class Station(models.Model):
@@ -40,14 +42,14 @@ class AllowanceRate(models.Model):
     allowance_rate=models.ForeignKey(RateType,on_delete=models.CASCADE)
     amount=models.FloatField(default=0)
     class Meta:
-        verbose_name_plural='allowancerates'
+        verbose_name_plural='Allowance rates'
     def __str__ (self):
         return self.allowance_rate
 
 class Directorate(models.Model):
     directorate_name=models.CharField(max_length=100)
     class Meta:
-        verbose_name_plural='directorates'
+        verbose_name_plural='Directorates'
 
 
     def __str__ (self):
@@ -62,7 +64,7 @@ class Period(models.Model):
     p_flag=models.BooleanField(default=True)
 
     class Meta:
-        verbose_name_plural='periods'
+        verbose_name_plural='Periods'
     def __str__ (self):
         return self.period_name
 
@@ -74,7 +76,7 @@ class Employee(models.Model):
     emp_scale=models.ForeignKey(SalaryScale, on_delete=models.CASCADE)
     date_left_org=models.DateField(null=True)
     class Meta:
-        verbose_name_plural='employees'
+        verbose_name_plural='Employees'
     def __str__ (self):
         return self.emp_name
 
@@ -83,14 +85,14 @@ class RequisitionDetailType(models.Model):
     detail_name=models.CharField(max_length=100)
     objects = models.Manager()
     class Meta:
-        verbose_name_plural='requistiondetailtypes'
+        verbose_name_plural='Requisition detail types'
     def __str__ (self):
         return self.detail_name
 class Requisition(models.Model):
     made_by=models.ForeignKey(Employee, on_delete=models.CASCADE)
     date_made=models.DateTimeField(auto_now_add=True)
     purpose=models.TextField(verbose_name='Purpose')
-    total =models.DecimalField(max_digits=5, decimal_places=2, default=0.0)
+    total =models.DecimalField(max_digits=10, decimal_places=2, default=0.0)
     class Meta:
         verbose_name_plural='Requisition'
     def __str__ (self):
@@ -103,11 +105,22 @@ class RequisitionDetail(models.Model):
     ndays = models.IntegerField(default=0, verbose_name="Number of days")
     startdate = models.DateField(null=True)
     enddate = models.DateField(null=True)
-    rate = models.FloatField(default=0.0, verbose_name='Allowances Rate')
-    amount = models.FloatField(default=0.0, verbose_name='Amount')
+    rate = models.DecimalField(max_digits=10, decimal_places=2, default=0.0, verbose_name='Allowances Rate')
+    amount = models.DecimalField(max_digits=10, decimal_places=2, default=0.0, verbose_name='Amount')
     class Meta:
         verbose_name_plural='Requisition details'
+        
+@receiver(post_save, sender=RequisitionDetail)
+def add_requisition_total(sender, instance, **kwargs):
+    requisition = instance.requisition
+    requisition.total = requisition.total + instance.amount
+    requisition.save()
 
+@receiver(post_delete, sender=RequisitionDetail)
+def substract_requisition_total(sender, instance, **kwargs):
+    requisition = instance.requisition
+    requisition.total = requisition.total - instance.amount
+    requisition.save()
 class RequisitionTotal(models.Model) :
     date_made=models.DateField(db_column='date_made')
     purpose=models.CharField(max_length=400, db_column='purpose')
