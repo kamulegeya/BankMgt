@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect, get_object_or_404
 from .models import requistion,requistion_total
 from  django.db.models import Sum
 from .forms import RequistionForm,RequistiondetailForm
@@ -38,21 +38,16 @@ def new_requistion(request):
 
     
 def add_details(request,requistion_id):
-    myrequistion=requistion.objects.get(id=requistion_id)
-    if request.method !='POST':
-        # if no data submitted ,create a blank form
-        form=RequistiondetailForm()
-    else:
-        # post data submitted
+    requistion_instance =  get_object_or_404(requistion, pk=requistion_id)
+    form=RequistiondetailForm()
+    if request.method =='POST':
         form=RequistiondetailForm(data=request.POST)  
         if form.is_valid():
-            details=form.save(commit=False)
-            #print(myrequistion.pk)
-            details.requistion=myrequistion
-            print(type(myrequistion))
-            details.save()             
-            return  redirect('requistions:requistion_get',pk=requistion_id)
+            detail = form.save(commit=False)
+            detail.requistion=requistion_instance
+            detail.save()        
+            return  redirect(f'requistions/{detail.pk}')
         
     #display a blank or invalid form
-    context={'requistion':myrequistion,'form': form}
+    context={'requistion':requistion_instance, 'form': form}
     return render(request,'requistions/requistion_detail_add.html',context)

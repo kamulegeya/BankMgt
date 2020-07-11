@@ -105,7 +105,7 @@ class requistion(models.Model):
     def __str__ (self):
         return self.purpose
 class requistiondetail(models.Model):
-    requistionid=models.ForeignKey(requistion,on_delete=models.CASCADE)
+    requistionid=models.ForeignKey(requistion, null=True, on_delete=models.CASCADE)
     emp_name=models.ForeignKey(employee,on_delete=models.CASCADE)
     detail_type=models.ForeignKey(requistiondetailtype,on_delete=models.CASCADE)
     period_claimed=models.ForeignKey(period,on_delete=models.CASCADE)
