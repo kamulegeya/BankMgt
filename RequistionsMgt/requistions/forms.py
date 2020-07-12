@@ -1,12 +1,24 @@
 from django import forms
-from .models import requistion,requistiondetail
-class RequistionForm(forms.ModelForm):
+from .models import Requisition,RequisitionDetail
+class RequisitionForm(forms.ModelForm):
     class Meta:
-        model=requistion
-        fields ='__all__'
+        model=Requisition
+        fields = [
+            'made_by',
+            'purpose'
+        ]
 
 
-class RequistiondetailForm(forms.ModelForm):
+class RequisitionDetailForm(forms.ModelForm):
     class Meta:
-        model=requistiondetail
-        fields =['emp_name','detail_type','period_claimed','ndays','startdate','enddate','rate','amount']
+        model = RequisitionDetail
+        fields = [
+            'emp_name',
+            'detail_type',
+            'period_claimed',
+            'ndays',
+            'startdate',
+            'enddate',
+            'rate',
+            'amount'
+        ]

@@ -1,22 +1,35 @@
 from django.contrib import admin
 
 # Register your models here.
-from  .models import station,directorate,position,salaryscale,requesttype,ratetype,allowancerate,period,employee,requistiondetailtype,requistion,requistiondetail
-class detailinline(admin.TabularInline):
-    model=requistiondetail
-@admin.register(requistion)
-class requistionadmin(admin.ModelAdmin):
-    inlines=[detailinline,]
+from  .models import (
+    Station,
+    Directorate,
+    Position,
+    SalaryScale,
+    RequestType,
+    RateType,
+    AllowanceRate,
+    Period,
+    Employee,
+    RequisitionDetailType,
+    Requisition,
+    RequisitionDetail
+)
+class DetailInline(admin.TabularInline):
+    model=RequisitionDetail
+@admin.register(Requisition)
+class RequisitionAdmin(admin.ModelAdmin):
+    inlines=[DetailInline,]
 
-admin.site.register(station)
-admin.site.register(directorate)
-admin.site.register(position)
-admin.site.register(salaryscale)
-admin.site.register(requesttype)
-admin.site.register(ratetype)
-admin.site.register(allowancerate)
-admin.site.register(period)
-admin.site.register(employee)
-admin.site.register(requistiondetailtype)
-#admin.site.register(requistion)
-admin.site.register(requistiondetail)
+admin.site.register(Station)
+admin.site.register(Directorate)
+admin.site.register(Position)
+admin.site.register(SalaryScale)
+admin.site.register(RequestType)
+admin.site.register(RateType)
+admin.site.register(AllowanceRate)
+admin.site.register(Period)
+admin.site.register(Employee)
+admin.site.register(RequisitionDetail)
+admin.site.register(RequisitionDetailType)
+

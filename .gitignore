@@ -1,2 +1,7 @@
 /.vscode
 /bank
+*.pyc
+*.pyo
+venv/
+
+.DS_Store
